@@ -78,14 +78,21 @@ cron.schedule('0 * * * *', async () => {
   console.log('Starting scheduled repository fetch');
   await fetchRepositories();
 });*/
+// Allowed origins
+const allowedOrigins = ['http://localhost:3000', 'http://dev.timebuffer.io'];
 
 // Use CORS middleware with options
 app.use(cors({
-  origin: 'http://dev.timebuffer.io', // Allow only this origin
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,POST', // Allow only these methods
   allowedHeaders: 'Content-Type,Authorization', // Allow only these headers
 }));
-
 app.get('/repositories', (req, res) => {
   res.json(state.repositories);
 });
