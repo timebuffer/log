@@ -81,7 +81,7 @@ cron.schedule('0 * * * *', async () => {
 
 // Use CORS middleware with options
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow only this origin
+  origin: 'http://dev.timebuffer.io', // Allow only this origin
   methods: 'GET,POST', // Allow only these methods
   allowedHeaders: 'Content-Type,Authorization', // Allow only these headers
 }));
